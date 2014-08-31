@@ -1,5 +1,8 @@
 # maintainer: InfoSiftr <github@infosiftr.com> (@infosiftr)
 
-latest: git://github.com/docker-library/rails@8a540d2ca1d042aec81fee02cf5e584d3af1aeda
-4.1: git://github.com/docker-library/rails@8a540d2ca1d042aec81fee02cf5e584d3af1aeda
-4.1.1: git://github.com/docker-library/rails@8a540d2ca1d042aec81fee02cf5e584d3af1aeda
+4.1.5: git://github.com/docker-library/rails@2f86b2e73f46be25d780575f0b6e9ad03b60880e
+4.1: git://github.com/docker-library/rails@2f86b2e73f46be25d780575f0b6e9ad03b60880e
+4: git://github.com/docker-library/rails@2f86b2e73f46be25d780575f0b6e9ad03b60880e
+latest: git://github.com/docker-library/rails@2f86b2e73f46be25d780575f0b6e9ad03b60880e
+
+onbuild: git://github.com/docker-library/rails@7bb6ade7f97129cc58967d7d0ae17f4b62ae52eb onbuild

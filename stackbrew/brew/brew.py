@@ -164,7 +164,8 @@ class StackbrewBuilder(object):
         for repo in self.repos:
             self.build_repo(repo, continue_on_error, callback)
             for namespace in self.namespaces:
-                self.pushlist.append('/'.join([namespace, repo.name]))
+                if namespace != '':
+                    self.pushlist.append('/'.join([namespace, repo.name]))
 
     def build_repo(self, repo, continue_on_error=True, callback=None):
         for version in repo.list_versions():
@@ -264,7 +265,8 @@ class LocalBuilder(StackbrewBuilder):
         super(LocalBuilder, self).__init__(
             library, namespaces, targetlist, repo_cache
         )
-        self.client = docker.Client(version='1.9', timeout=10000)
+        self.client = docker.Client(version='1.9', timeout=10000,
+                                    base_url=os.getenv('DOCKER_HOST'))
         self.build_success_re = r'^Successfully built ([a-f0-9]+)\n$'
 
     def do_build(self, repo, version, dockerfile_location, callback=None):
@@ -286,7 +288,11 @@ class LocalBuilder(StackbrewBuilder):
                 'Build success: {0} ({1}:{2})'.format(img_id, repo.name, tag)
             )
             for namespace in self.namespaces:
-                self.client.tag(img_id, '/'.join([namespace, repo.name]), tag)
+                if namespace != '':
+                    name = '/'.join([namespace, repo.name])
+                else:
+                    name = repo.name
+                self.client.tag(img_id, name, tag)
 
         if callback:
             callback(None, repo, version, img_id, logs)
